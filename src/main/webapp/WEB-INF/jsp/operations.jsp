@@ -117,6 +117,23 @@
                     <td><input type="text" ng-model="amount"/></td>
                     <td><button align="center" ng-click="deposit()">DEPOSIT</button></td>
                 </tr>
+                <tr ng-show="flag5">
+                    <td><label>ENTER CHEQUE REFERENCE</label></td>
+                    <td><input type="text" ng-model="chequeRef"/></td>
+                </tr>
+                <tr ng-show="flag6">
+                    <td><label>ENTER DD REFERENCE</label></td>
+                    <td><input type="text" ng-model="ddRef"/></td>
+                </tr>
+                <tr ng-show="flag7">
+                    <td><label>ENTER ISSUED BANK</label></td>
+                    <td><input type="text" ng-model="bank"/></td>
+                </tr>
+                <tr ng-show="flag7">
+                    <td><label>ENTER BRANCH</label></td>
+                    <td><input type="text" ng-model="branch"/></td>
+                </tr>
+                
             </table>
         </div>
 
