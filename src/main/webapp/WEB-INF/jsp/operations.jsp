@@ -15,6 +15,10 @@
                 $scope.flag2 = false;
                 $scope.flag3 = false;
                 $scope.flag4 = false;
+                $scope.flag5 = false;
+                $scope.flag6 = false;
+                $scope.flag7 = false;
+                
                 $scope.showDepositWindow = function () {
                     $http({
                         method: "get",
@@ -96,7 +100,7 @@
         <div ng-show="flag1">
 
             <table border="1">
-                <tr><td colspan="3"><label>Deposit Window</label></td></tr>
+                <tr><td colspan="3"><label><b>DEPOSIT WINDOW</b></label></td></tr>
                 <tr><td>
                         <label>ENTER ACCOUNT NUMBER:</label></td>
                     <td><input type="text" ng-model="accountNumber"/></td>
@@ -104,7 +108,7 @@
                 </tr>
                 <tr ng-show="flag2"><td colspan="3">{{displayMessage}}</td></tr>
                 <tr ng-show="flag3">
-                    <td colspan="2"><label>TRANSACTION MODE</label></td>
+                    <td colspan="2"><label>PAYMENT INSTRUMENT</label></td>
                     <td><table ng-show="flag3">
                             <tr><td><input type="radio" ng-model="txMode" value="cash" ng-change="cash()"/>CASH</td>
                                 <td><input type="radio" ng-model="txMode" value="cheque" ng-change="cheque()"/>CHEQUE</td>
@@ -112,26 +116,23 @@
                         </table>
                     </td>
                 </tr>
+                
+                <tr ng-show="flag5">
+                    <td><label>ENTER INSTRUMENT REFERENCE</label></td>
+                    <td><input type="text" ng-model="chequeRef"/></td>
+                </tr>
+                <tr ng-show="flag6">
+                    <td><label>ENTER ISSUED BANK</label></td>
+                    <td><input type="text" ng-model="bank"/></td>
+                </tr>
+                <tr ng-show="flag6">
+                    <td><label>ENTER BRANCH</label></td>
+                    <td><input type="text" ng-model="branch"/></td>
+                </tr>
                 <tr ng-show="flag3">
                     <td><label>ENTER DEPOSIT AMOUNT</label></td>
                     <td><input type="text" ng-model="amount"/></td>
                     <td><button align="center" ng-click="deposit()">DEPOSIT</button></td>
-                </tr>
-                <tr ng-show="flag5">
-                    <td><label>ENTER CHEQUE REFERENCE</label></td>
-                    <td><input type="text" ng-model="chequeRef"/></td>
-                </tr>
-                <tr ng-show="flag6">
-                    <td><label>ENTER DD REFERENCE</label></td>
-                    <td><input type="text" ng-model="ddRef"/></td>
-                </tr>
-                <tr ng-show="flag7">
-                    <td><label>ENTER ISSUED BANK</label></td>
-                    <td><input type="text" ng-model="bank"/></td>
-                </tr>
-                <tr ng-show="flag7">
-                    <td><label>ENTER BRANCH</label></td>
-                    <td><input type="text" ng-model="branch"/></td>
                 </tr>
                 
             </table>
