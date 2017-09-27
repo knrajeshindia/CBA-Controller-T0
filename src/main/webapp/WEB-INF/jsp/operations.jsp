@@ -17,7 +17,8 @@
                 $scope.flag4 = false;
                 $scope.flag5 = false;
                 $scope.flag6 = false;
-                $scope.flag7 = false;
+                $scope.flag7;
+                
                 
                 $scope.showDepositWindow = function () {
                     $http({
