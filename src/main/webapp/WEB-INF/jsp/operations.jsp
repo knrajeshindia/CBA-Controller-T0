@@ -11,107 +11,116 @@
         <script type="text/javascript">
             var app = angular.module("bankOperationsModule", []);
             app.controller("bankOperationsController", function ($scope, $window, $http) {
-            $scope.flag1 = false;
-            $scope.flag2 = false;
-            $scope.flag3 = false;
-            $scope.flag4 = false;
-            //Flag for displaying Instrument ref
-            $scope.flag5 = false;
-            //Flag for displaying Bank/Branch ref
-            $scope.flag6 = false;
-            //Flag for displaying revised balance ref
-            $scope.flag7 = false;
-            $scope.showDepositWindow = function () {
-            $http({
-            method: "get",
-                    url: "/CBA-Controller/deposit",
-            }).then(function (result) {
-            $scope.flag1 = true;
-            $scope.flag4 = true;
-            }, function (result) {
-            $window.alert("Server response-FAILURE! Please try again later");
-            });
-            }
+                $scope.flag1 = false;
+                $scope.flag2 = false;
+                $scope.flag3 = false;
+                $scope.flag4 = false;
+                //Flag for displaying Instrument ref
+                $scope.flag5 = false;
+                //Flag for displaying Bank/Branch ref
+                $scope.flag6 = false;
+                //Flag for displaying revised balance ref
+                $scope.flag7 = false;
 
-            $scope.getAccountSummary = function () {
-            $http({
-            method: "get",
-                    url: "/CBA-Controller/getAccountSummary",
-                    params: {
-                    "accountNumber": $scope.accountNumber
-                    }
-            }).then(function (result) {
-            $scope.flag2 = true;
-            $scope.response = angular.fromJson(result.data);
-            if ($scope.response.status == "SUCCESS"){
-            $scope.message = $scope.response.message;
-            $scope.operative = angular.fromJson($scope.response.data).accountStatus;
-            $scope.accountName = angular.fromJson($scope.response.data).accountName;
-            $scope.balance = angular.fromJson($scope.response.data).balance;
-            $scope.displayMessage = $scope.accountNumber + " | " + $scope.message + " | " + $scope.operative;
-            if ($scope.operative == "ACTIVE"){
-            $scope.flag3 = true;
-            $scope.flag4 = false;
-            }}
+                $scope.amount = 0;
+                $scope.paymentInstrument = "NA";
+                $scope.instrumentRef = "NA";
+                $scope.bank = "NA";
+                $scope.branch = "NA";
 
-            if ($scope.response.status == "FAILURE"){
-            $scope.message = $scope.response.message;
-            $scope.displayMessage = $scope.accountNumber + " | " + $scope.message;
-            }
-
-            }, function (result) {
-            $scope.flag2 = true;
-            $scope.displayMessage = "UNABLE TO CONTACT SERVER; PL TRY AGAIN"
-
-            });
-            }
-
-            $scope.cash = function(){
-            //Flag for displaying Instrument ref
-            $scope.flag5 = false;
-            //Flag for displaying Bank/Branch ref
-            $scope.flag6 = false;
-            }
-
-            $scope.cheque = function(){
-            //Flag for displaying Instrument ref
-            $scope.flag5 = true;
-            //Flag for displaying Bank/Branch ref
-            $scope.flag6 = true;
-            }
-
-            $scope.dd = function(){
-            //Flag for displaying Instrument ref
-            $scope.flag5 = true;
-            //Flag for displaying Bank/Branch ref
-            $scope.flag6 = true;
-            }
-
-
-
-            //
-
-
-            $scope.deposit = function(){
-            var formData = {
-            "accountNumber": $scope.accountNumber,
-            "currencyId":$scope.currencyId,
-                    "amount":$scope.amount,
-                    "paymentInstrument":$scope.paymentInstrument,
-                    "instrumentRef":$scope.instrumentRef,
-                    "bank":$scope.bank,
-                    "branch":$scope.branch
-            };
-            $http.post('deposit', formData).then(function(result){
-            $scope.flag7 = true;
-            $scope.response = angular.fromJson(result.data);
-            $scope.revBalance = angular.fromJson($scope.response.data).balance;
-            $scope.transactionID = angular.fromJson($scope.response.data).transactionID;
-            },
-                    function(result){
-                    $window.alert("Failed data binding");
+                $scope.showDepositWindow = function () {
+                    $http({
+                        method: "get",
+                        url: "/CBA-Controller/deposit",
+                    }).then(function (result) {
+                        $scope.flag1 = true;
+                        $scope.flag4 = true;
+                    }, function (result) {
+                        $window.alert("Server response-FAILURE! Please try again later");
                     });
-            }
+                }
+
+                $scope.getAccountSummary = function () {
+                    $http({
+                        method: "get",
+                        url: "/CBA-Controller/getAccountSummary",
+                        params: {
+                            "accountNumber": $scope.accountNumber
+                        }
+                    }).then(function (result) {
+                        $scope.flag2 = true;
+                        $scope.response = angular.fromJson(result.data);
+                        if ($scope.response.status == "SUCCESS") {
+                            $scope.message = $scope.response.message;
+                            $scope.operative = angular.fromJson($scope.response.data).accountStatus;
+                            $scope.accountName = angular.fromJson($scope.response.data).accountName;
+                            $scope.balance = angular.fromJson($scope.response.data).balance;
+                            $scope.displayMessage = $scope.accountNumber + " | " + $scope.message + " | " + $scope.operative;
+                            if ($scope.operative == "ACTIVE") {
+                                $scope.flag3 = true;
+                                $scope.flag4 = false;
+                            }
+                        }
+
+                        if ($scope.response.status == "FAILURE") {
+                            $scope.message = $scope.response.message;
+                            $scope.displayMessage = $scope.accountNumber + " | " + $scope.message;
+                        }
+
+                    }, function (result) {
+                        $scope.flag2 = true;
+                        $scope.displayMessage = "UNABLE TO CONTACT SERVER; PL TRY AGAIN"
+
+                    });
+                }
+
+                $scope.cash = function () {
+                    //Flag for displaying Instrument ref
+                    $scope.flag5 = false;
+                    //Flag for displaying Bank/Branch ref
+                    $scope.flag6 = false;
+                }
+
+                $scope.cheque = function () {
+                    //Flag for displaying Instrument ref
+                    $scope.flag5 = true;
+                    //Flag for displaying Bank/Branch ref
+                    $scope.flag6 = true;
+                }
+
+                $scope.dd = function () {
+                    //Flag for displaying Instrument ref
+                    $scope.flag5 = true;
+                    //Flag for displaying Bank/Branch ref
+                    $scope.flag6 = true;
+                }
+
+
+
+                //
+
+
+                $scope.deposit = function () {
+                    var formData = {
+                        "accountNumber": $scope.accountNumber,
+                        "currencyId": $scope.currencyId,
+                        "amount": $scope.amount,
+                        "paymentInstrument": $scope.paymentInstrument,
+                        "instrumentRef": $scope.instrumentRef,
+                        "bank": $scope.bank,
+                        "branch": $scope.branch
+                    };
+                    $http.post('deposit', formData).then(function (result) {
+                        $scope.flag7 = true;
+                        $scope.response = angular.fromJson(result.data);
+                        $scope.revBalance = angular.fromJson($scope.response.data).balance;
+                        $scope.transactionID = angular.fromJson($scope.response.data).transactionID;
+                        $scope.transactionStatus = angular.fromJson($scope.response.data).transactionStatus;
+                    },
+                            function (result) {
+                                $window.alert("Failed data binding");
+                            });
+                }
             });
         </script>
         <style>
@@ -182,13 +191,10 @@
                     <td><label>ENTER BRANCH</label></td>
                     <td><input type="text" ng-model="branch"/></td>
                 </tr>
-
-
-
                 <!--Display Currency ID options menu-->
                 <tr ng-show="flag3"><td><label>SELECT CURRENCY:</label></td>
-                    <td><select ng-model="currencyId">
-                            <option value="100">DOLLAR-AUSTRALIAN</option>
+                    <td><select ng-model="currencyId" required>
+                            <option value="100" selected="selected">DOLLAR-AUSTRALIAN</option>
                             <option value="101">DOLLAR-AMERICAN</option>
                             <option value="102">RUPEE-INDIAN</option>
                         </select>
@@ -198,20 +204,20 @@
                     <td><input type="number" ng-model="amount" min="1" max="10000000" required/></td>
                     <td><button align="center" ng-click="deposit()">DEPOSIT</button></td>
                 </tr>
-
-
-
                 </td></tr>
 
-
-
+                <!--Display Deposit status-->
+                <tr ng-show="flag7"><td><label>TRANSACTION STATUS:</label></td>
+                    <td>{{transactionStatus}}</td></tr>
+                
+                <!--Display TransactionID-->
+                <tr ng-show="flag7"><td><label>TRANSACTION ID:</label></td>
+                    <td>{{transactionID}}</td></tr>
 
                 <!--Display Account REVISED balance-->
                 <tr ng-show="flag7"><td><label>REVISED BALANCE:</label></td>
                     <td>{{revBalance}}</td></tr>
-                <!--Display TransactionID-->
-                <tr ng-show="flag7"><td><label>TRANSACTION ID:</label></td>
-                    <td>{{transactionID}}</td></tr>
+
 
             </table>
         </div>
