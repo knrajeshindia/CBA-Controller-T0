@@ -20,7 +20,7 @@
             //Flag for displaying Bank/Branch ref
             $scope.flag6 = false;
             //Flag for displaying revised balance ref
-            $scope.flag7=false;
+            $scope.flag7 = false;
             $scope.showDepositWindow = function () {
             $http({
             method: "get",
@@ -52,7 +52,6 @@
             if ($scope.operative == "ACTIVE"){
             $scope.flag3 = true;
             $scope.flag4 = false;
-            
             }}
 
             if ($scope.response.status == "FAILURE"){
@@ -87,62 +86,33 @@
             //Flag for displaying Bank/Branch ref
             $scope.flag6 = true;
             }
-            
-            
-            
+
+
+
             //
-            
-            
-                    $scope.deposit = function(){
-                    var formData = {
-                    "accountNumber": $scope.accountNumber,
+
+
+            $scope.deposit = function(){
+            var formData = {
+            "accountNumber": $scope.accountNumber,
+            "currencyId":$scope.currencyId,
                     "amount":$scope.amount,
                     "paymentInstrument":$scope.paymentInstrument,
                     "instrumentRef":$scope.instrumentRef,
                     "bank":$scope.bank,
-                    "branch":$scope.branch	
-                        };
-                    
-                    $http.post('deposit', formData).then(function(result){
-                     $scope.flag7=true;
-                     $scope.response = angular.fromJson(result.data);
-                     $scope.revBalance=angular.fromJson($scope.response.data).balance;
-                     $scope.transactionID=angular.fromJson($scope.response.data).transactionID;
-                    },
-                    
+                    "branch":$scope.branch
+            };
+            $http.post('deposit', formData).then(function(result){
+            $scope.flag7 = true;
+            $scope.response = angular.fromJson(result.data);
+            $scope.revBalance = angular.fromJson($scope.response.data).balance;
+            $scope.transactionID = angular.fromJson($scope.response.data).transactionID;
+            },
                     function(result){
-                     $window.alert("Failed data binding");   
+                    $window.alert("Failed data binding");
                     });
-                    
-        
-        
-        
-        
-        
-        
-	   
-	  }
-   });
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
-
-                    
-                    
-                    
-                            
-            
+            }
+            });
         </script>
         <style>
             table {
@@ -212,11 +182,30 @@
                     <td><label>ENTER BRANCH</label></td>
                     <td><input type="text" ng-model="branch"/></td>
                 </tr>
+
+
+
+                <!--Display Currency ID options menu-->
+                <tr ng-show="flag3"><td><label>SELECT CURRENCY:</label></td>
+                    <td><select ng-model="currencyId">
+                            <option value="100">DOLLAR-AUSTRALIAN</option>
+                            <option value="101">DOLLAR-AMERICAN</option>
+                            <option value="102">RUPEE-INDIAN</option>
+                        </select>
+
                 <tr ng-show="flag3">
                     <td><label>ENTER DEPOSIT AMOUNT</label></td>
                     <td><input type="number" ng-model="amount" min="1" max="10000000" required/></td>
                     <td><button align="center" ng-click="deposit()">DEPOSIT</button></td>
                 </tr>
+
+
+
+                </td></tr>
+
+
+
+
                 <!--Display Account REVISED balance-->
                 <tr ng-show="flag7"><td><label>REVISED BALANCE:</label></td>
                     <td>{{revBalance}}</td></tr>

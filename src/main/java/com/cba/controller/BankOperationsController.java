@@ -5,7 +5,6 @@ package com.cba.controller;
 import com.cba.bean.Deposit;
 import com.cba.service.AccountServiceImpl;
 import com.cba.service.DepositServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
